@@ -31,6 +31,17 @@ h3{margin:0 0 12px}
 .nav{margin:20px 0}
 .nav button{border:1px solid var(--line);background:#fff;border-radius:8px;padding:10px 12px;font-weight:850}
 .nav button.active{background:var(--pine);color:#fff}
+.adminPanel{margin:-6px 0 18px}
+.adminPanel[hidden]{display:none}
+.adminBox{display:grid;grid-template-columns:1fr minmax(260px,420px);gap:14px;align-items:start}
+.adminControls{display:grid;grid-template-columns:1fr auto auto auto;gap:8px;align-items:center}
+.adminControls input{border:1px solid var(--line);border-radius:8px;padding:9px 10px;background:#fff}
+.adminMode{border:1px solid rgba(255,255,255,.25)}
+body:not(.is-admin) .admin-only{display:none!important}
+body:not(.is-admin) .locked-action{display:none!important}
+body:not(.is-admin) main input:disabled,
+body:not(.is-admin) main select:disabled,
+body:not(.is-admin) main textarea:disabled{background:#f7f8f5;color:#6a746b}
 .tab{display:none}
 .tab.active{display:block}
 .section{display:flex;justify-content:space-between;align-items:end;gap:14px;margin:25px 0 14px}
@@ -66,6 +77,6 @@ h3{margin:0 0 12px}
 .importbox.active{display:block}
 #reportText{width:100%;min-height:300px;border:1px solid var(--line);border-radius:8px;padding:10px;white-space:pre-wrap}
 .footer{text-align:center;color:var(--muted);font-size:12px;padding:28px 10px}
-@media(max-width:900px){.heroGrid,.dash,.cards2,.cards3{grid-template-columns:1fr}.kpis{grid-template-columns:repeat(2,1fr)}.ring{margin:auto}.form{grid-template-columns:1fr}.section{display:block}}
+@media(max-width:900px){.heroGrid,.dash,.cards2,.cards3,.adminBox{grid-template-columns:1fr}.kpis{grid-template-columns:repeat(2,1fr)}.ring{margin:auto}.form{grid-template-columns:1fr}.section{display:block}.adminControls{grid-template-columns:1fr}}
 @media(max-width:560px){.shell{padding:12px}.stats,.kpis{grid-template-columns:1fr}.btn{width:100%;white-space:normal}}
 @media print{.actions,.nav,.controls,button,input[type=file],.no-print{display:none!important}.tab{display:block!important}.card{box-shadow:none}.hero{background:#fff!important;color:#111;border:0;padding:0}.subtitle,.eyebrow{color:#333}.shell{max-width:none}}
