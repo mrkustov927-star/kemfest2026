@@ -53,9 +53,9 @@
     <section class="adminPanel" id="adminPanel">
       <div class="card adminBox">
         <div>
-          <h3 id="adminTitle">Публичный режим</h3>
-          <p class="small" id="adminHint">Введите PIN администратора, чтобы открыть редактирование и служебные разделы.</p>
-          <div class="note" id="adminStatus">Это локальная защита для GitHub Pages: служебные настройки скрыты от обычных посетителей.</div>
+          <h3 id="adminTitle">Вход администратора</h3>
+          <p class="small" id="adminHint">Введите PIN, который знает только администратор проекта.</p>
+          <div class="note" id="adminStatus"></div>
         </div>
         <div class="adminControls">
           <input id="adminPin" type="password" placeholder="PIN администратора" autocomplete="current-password">
@@ -166,6 +166,8 @@
 
     <div class="footer">Исторический фестиваль «КемьФест» · административная панель реализации и отчетности</div>
   </div>
+  <script src="./config.js"></script>
   <script src="./app.js"></script>
+  <script src="./admin-auth.js"></script>
 </body>
 </html>
