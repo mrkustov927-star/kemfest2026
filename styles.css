@@ -43,6 +43,10 @@ h3{margin:0 0 12px}
 body:not(.is-admin) .admin-only{display:none!important}
 body:not(.is-admin) .locked-action{display:none!important}
 body:not(.is-admin) main input:disabled,body:not(.is-admin) main select:disabled,body:not(.is-admin) main textarea:disabled{background:#f7f8f5;color:#6a746b}
+body:not(.teamPage):not(.is-admin) #nav,body:not(.teamPage):not(.is-admin) main{display:none!important}
+body:not(.teamPage):not(.is-admin) .hero .stats,body:not(.teamPage):not(.is-admin) #adminToggle,body:not(.teamPage):not(.is-admin) .hero .actions button:not(#adminToggle),body:not(.teamPage):not(.is-admin) .hero .actions a:not(:first-child){display:none!important}
+body:not(.teamPage):not(.is-admin) .adminPanel{margin-top:18px}
+body:not(.teamPage):not(.is-admin) .adminBox{max-width:860px;margin:auto}
 .tab{display:none}
 .tab.active{display:block}
 .section{display:flex;justify-content:space-between;align-items:end;gap:14px;margin:25px 0 14px}
