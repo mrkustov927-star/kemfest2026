@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>КемьФест 2026 - администратор проекта</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <div class="shell">
+    <header class="hero">
+      <div class="heroGrid">
+        <div>
+          <div class="eyebrow">Росмолодежь.Гранты · соглашение № 091-11-2025-2542</div>
+          <h1>КемьФест 2026</h1>
+          <p class="subtitle">Административная панель реализации проекта: план, доказательства, участники, бюджет, облачные папки, журнал изменений и печатный отчет собираются из одного набора данных.</p>
+          <div class="stats">
+            <div><b>12</b><span>мероприятий</span></div>
+            <div><b>480</b><span>участников</span></div>
+            <div><b>57</b><span>публикаций</span></div>
+            <div><b>69 000</b><span>просмотров</span></div>
+          </div>
+          <div class="actions">
+            <a class="btn primary" href="./index.html">На страницу команды</a>
+            <a class="btn secondary" href="https://github.com/mrkustov927-star/kemfest2026/raw/main/project-kemfest-2026.docx" download>Скачать файл проекта</a>
+            <button class="btn secondary" data-tab-go="proofs">Внести доказательство</button>
+            <button class="btn secondary" data-tab-go="check">Проверить готовность</button>
+            <button class="btn secondary" id="copyFull">Скопировать на проверку</button>
+            <button class="btn secondary" id="printReport">Печать отчета</button>
+            <button class="btn secondary" id="exportData">Сохранить копию</button>
+            <button class="btn secondary" id="importBtn">Импорт</button>
+            <input id="importFile" type="file" accept=".json" hidden>
+          </div>
+        </div>
+        <div class="ring" id="ring"><div><b id="overallPct">0%</b><span>готовность</span></div></div>
+      </div>
+    </header>
+
+    <nav class="nav" id="nav">
+      <button class="active" data-tab="dashboard">Дашборд</button>
+      <button data-tab="plan">План реализации</button>
+      <button data-tab="proofs">Доказательства</button>
+      <button data-tab="people">Участники</button>
+      <button data-tab="budget">Бюджет</button>
+      <button data-tab="docs">Документы</button>
+      <button data-tab="cloud">Облако</button>
+      <button data-tab="history">История</button>
+      <button data-tab="check">Автопроверка</button>
+      <button data-tab="report">Отчет</button>
+    </nav>
+
+    <main>
+      <section id="dashboard" class="tab active">
+        <div class="section"><div><h2>Дашборд проекта</h2><p>Показатели, сроки и главные пробелы перед отчетностью.</p></div></div>
+        <div class="grid kpis" id="kpis"></div>
+        <div class="grid dash">
+          <div class="card">
+            <div class="label">Срок проекта</div>
+            <div class="value" id="daysLeft"></div>
+            <div class="small">дней до 30.11.2026</div>
+            <div class="bar"><i id="timeBar"></i></div>
+            <div class="note" id="nearest"></div>
+          </div>
+          <div class="card"><h3>План / факт</h3><div id="chart"></div></div>
+        </div>
+      </section>
+
+      <section id="plan" class="tab">
+        <div class="section">
+          <div><h2>План реализации</h2><p>По каждому мероприятию фиксируются статус, дата, результат и обязательные подтверждения.</p></div>
+          <div class="controls"><input id="taskSearch" placeholder="Поиск"><select id="taskFilter"><option value="all">Все</option><option value="open">Незавершенные</option><option value="risk">С риском срока</option></select></div>
+        </div>
+        <div class="grid cards3">
+          <div class="card"><div class="label">Мастер-классы</div><div class="value">10+</div><div class="small">февраль - май 2026</div></div>
+          <div class="card"><div class="label">Участники мастер-классов</div><div class="value">80</div><div class="small">14-25 лет, нужны списки и фото/видео</div></div>
+          <div class="card"><div class="label">Итоговая дата</div><div class="value">30.11</div><div class="small">все результаты, ссылки, статистика и финдокументы</div></div>
+        </div>
+        <div id="taskList" class="grid"></div>
+      </section>
+
+      <section id="proofs" class="tab">
+        <div class="section">
+          <div><h2>Единый реестр доказательств</h2><p>Публикации, ссылки, скриншоты статистики, фото, видео, списки, акты и папки документов.</p></div>
+          <div class="controls">
+            <button class="btn light" data-add-proof="publication">Добавить публикацию</button>
+            <button class="btn light" data-add-proof="stats">Добавить скрин</button>
+            <button class="btn light" data-add-proof="folder">Добавить папку</button>
+            <button class="btn light" id="toggleImportLinks">Импортировать ссылки</button>
+          </div>
+        </div>
+        <div id="linkImport" class="card importbox no-print">
+          <div class="field"><label>Список ссылок</label><textarea id="bulkLinks" placeholder="Каждая ссылка с новой строки. Можно вместе с названием."></textarea></div>
+          <div class="actions"><button class="btn light" id="importLinks">Добавить ссылки</button><button class="btn light" id="starterLinks">Загрузить примерные ссылки проекта</button></div>
+        </div>
+        <div class="grid kpis" id="proofKpis"></div>
+        <div class="card tablewrap"><table class="table"><thead><tr><th>Тип</th><th>Мероприятие</th><th>Дата</th><th>Источник</th><th>Название</th><th>Ссылка</th><th>Просмотры</th><th>Охват</th><th>Подтв.</th><th></th></tr></thead><tbody id="proofRows"></tbody></table></div>
+      </section>
+
+      <section id="people" class="tab">
+        <div class="section"><div><h2>Участники</h2><p>Реестр уникальных участников, повторных посещений, возраста и ссылок на списки.</p></div><button class="btn light" id="addPerson">Добавить строку</button></div>
+        <div class="grid kpis" id="peopleKpis"></div>
+        <div class="card tablewrap"><table class="table"><thead><tr><th>Дата</th><th>Мероприятие</th><th>Уникальные</th><th>Повторные</th><th>14-25</th><th>Список</th><th></th></tr></thead><tbody id="peopleRows"></tbody></table></div>
+      </section>
+
+      <section id="budget" class="tab">
+        <div class="section"><div><h2>Бюджет и финансовые документы</h2><p>План гранта - 891 000 руб. Проверяются факт, документы, суммы и связь с мероприятиями.</p></div><button class="btn light" id="copyFinance">Скопировать финансовую проверку</button></div>
+        <div class="grid kpis" id="budgetKpis"></div>
+        <div class="card tablewrap"><table class="table"><thead><tr><th>Статья</th><th>План</th><th>Факт</th><th>Документ</th><th>Ссылка / папка</th><th>Сумма</th><th>Мероприятие</th><th>Статус</th></tr></thead><tbody id="budgetRows"></tbody></table></div>
+      </section>
+
+      <section id="docs" class="tab">
+        <div class="section"><div><h2>Документы</h2><p>Комплектность материалов перед отчетностью.</p></div></div>
+        <div class="grid cards2">
+          <div class="card"><div class="grid" id="docList"></div></div>
+          <div class="card"><h3>Файл проекта</h3><a class="btn light" href="https://github.com/mrkustov927-star/kemfest2026/raw/main/project-kemfest-2026.docx" download>Скачать проект DOCX</a><div class="note">Перед сдачей сверить номер соглашения, сроки, суммы, назначение расходов, акты, ссылки, статистику и финансовые документы.</div><button class="btn danger" id="resetAll">Сбросить локальные данные</button></div>
+        </div>
+      </section>
+
+      <section id="cloud" class="tab">
+        <div class="section"><div><h2>Облако и синхронизация</h2><p>Для 10/10 сайт должен быть связан с общей папкой и таблицей. Здесь фиксируются ссылки и при желании подключается Google Apps Script.</p></div></div>
+        <div class="grid cards2">
+          <div class="card"><div class="form" id="cloudForm"></div></div>
+          <div class="card"><h3>Обмен данными</h3><div class="actions"><button class="btn light" id="copyJson">Скопировать JSON</button><button class="btn light" id="sendCloud">Отправить в Apps Script</button><button class="btn light" id="openDrive">Открыть папку Drive</button></div><div class="note" id="cloudStatus">Если Apps Script не подключен, используйте экспорт JSON и ссылки на Google Drive/таблицу.</div></div>
+        </div>
+      </section>
+
+      <section id="history" class="tab">
+        <div class="section"><div><h2>История изменений</h2><p>Журнал показывает, когда менялись ключевые данные. Это помогает восстановить ход реализации.</p></div><button class="btn light" id="clearHistory">Очистить историю</button></div>
+        <div class="card tablewrap"><table class="table"><thead><tr><th>Дата</th><th>Действие</th><th>Детали</th></tr></thead><tbody id="historyRows"></tbody></table></div>
+      </section>
+
+      <section id="check" class="tab">
+        <div class="section"><div><h2>Автопроверка</h2><p>Проверка показателей, обязательных доказательств, сроков, участников, бюджета, документов и облачной готовности.</p></div><div class="controls"><button class="btn light" id="copyReach">Проверка просмотров</button><button class="btn light" id="copyCheck">Полная проверка</button></div></div>
+        <div class="grid cards3" id="checkCards"></div>
+        <div class="section"><div><h2>Что исправить</h2><p>Конкретные действия до состояния 10/10.</p></div></div>
+        <div class="grid cards2" id="fixList"></div>
+      </section>
+
+      <section id="report" class="tab">
+        <div class="section"><div><h2>Отчет</h2><p>Печатная форма и текст для проверки собираются из всех разделов сайта.</p></div><div class="controls"><button class="btn light" id="printReport2">Печать отчета</button><button class="btn light" id="copyFull2">Скопировать на проверку</button></div></div>
+        <div class="grid cards2">
+          <div class="card"><div class="field"><label>Ключевые результаты проекта</label><textarea id="reportResults"></textarea></div></div>
+          <div class="card"><div class="field"><label>Отклонения, риски и объяснения</label><textarea id="reportRisks"></textarea></div></div>
+          <div class="card"><h3>Итоговая сводка</h3><div class="note" id="summary"></div></div>
+          <div class="card"><h3>Готовый текст</h3><textarea id="reportText" readonly></textarea></div>
+        </div>
+      </section>
+    </main>
+
+    <div class="footer">Исторический фестиваль «КемьФест» · административная панель реализации и отчетности</div>
+  </div>
+  <script src="./app.js"></script>
+</body>
+</html>
