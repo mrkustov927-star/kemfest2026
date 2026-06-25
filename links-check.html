@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>КемьФест 2026 — проверка ссылок</title>
+<style>
+:root{--bg:#f5f7f2;--paper:#fff;--ink:#20241f;--muted:#667168;--line:#dde5dc;--pine:#244c3a;--lake:#2f6f82;--gold:#d0a246;--soft:#edf3ed;--shadow:0 10px 28px rgba(38,50,42,.08)}*{box-sizing:border-box}body{margin:0;background:var(--bg);font-family:Inter,Segoe UI,Arial,sans-serif;color:var(--ink)}.shell{max-width:1120px;margin:auto;padding:22px}.hero{border-radius:10px;padding:26px;background:linear-gradient(135deg,var(--pine),var(--lake));color:#fff;box-shadow:var(--shadow)}.eyebrow{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#e8cf8b;font-weight:900}h1{font-family:Georgia,serif;font-size:clamp(32px,5vw,54px);line-height:1;margin:10px 0}.subtitle{max-width:820px;color:rgba(255,255,255,.84);line-height:1.55}.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}.btn{border:0;border-radius:8px;padding:11px 14px;font-weight:850;text-decoration:none;display:inline-flex;align-items:center;gap:8px;cursor:pointer}.primary{background:#e8c777;color:#1f372b}.secondary{background:rgba(255,255,255,.1);color:#fff;border:1px solid rgba(255,255,255,.24)}.light{background:#fff;color:var(--pine);border:1px solid var(--line)}.grid{display:grid;gap:14px}.cards{grid-template-columns:repeat(3,1fr);margin:18px 0}.card{background:var(--paper);border:1px solid var(--line);border-radius:8px;box-shadow:0 8px 22px rgba(39,50,43,.055);padding:16px}.label{font-size:12px;font-weight:900;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}.value{font-size:28px;font-weight:950;margin:7px 0}.small{font-size:12px;color:var(--muted);line-height:1.45}.note{background:#fff6df;border:1px solid #e7c97f;color:#6d551b;border-radius:8px;padding:13px 15px;line-height:1.45}.panel{background:#fff;border:1px solid var(--line);border-radius:8px;padding:18px;margin-top:16px}.task{border:1px solid var(--line);border-radius:8px;padding:12px;background:#fff;margin:10px 0}.task b{display:block;margin-bottom:5px}textarea{width:100%;min-height:360px;border:1px solid var(--line);border-radius:8px;padding:14px;font:14px/1.45 Consolas,monospace;resize:vertical;background:#fff}a{color:var(--lake)}@media(max-width:760px){.shell{padding:12px}.cards{grid-template-columns:1fr}.actions{display:grid}.btn{justify-content:center}}
+</style>
+</head>
+<body>
+<div class="shell">
+<header class="hero"><div class="eyebrow">КемьФест 2026 · ссылки и просмотры</div><h1>Ссылки для проверки просмотров</h1><div class="subtitle">Страница собирает ссылки, результаты и отмеченные файлы из основного сайта. Скопируйте текст и отправьте его в чат Codex, чтобы проверить публичные просмотры и расхождения.</div><div class="actions"><button class="btn primary" onclick="copyForCodex()">Скопировать для проверки в Codex</button><button class="btn secondary" onclick="downloadTxt()">Скачать TXT</button><a class="btn secondary" href="./">Вернуться на сайт</a><a class="btn secondary" href="./implementation-guide.html">Памятка реализации</a></div></header>
+<div class="grid cards"><div class="card"><div class="label">Мастер-классы</div><div class="value">10+</div><div class="small">не менее 10 мастер-классов</div></div><div class="card"><div class="label">Этап</div><div class="value" style="font-size:20px">Февраль — май 2026</div><div class="small">повышение этнокультурного и художественного уровня</div></div><div class="card"><div class="label">Участники</div><div class="value">80</div><div class="small">молодых людей 14–25 лет</div></div></div>
+<div class="note"><b>Контрольный минимум:</b> 12 мероприятий, 480 участников, 57 публикаций, 69 000 просмотров. Просмотры подтверждаются ссылками и скриншотами статистики.</div>
+<section class="panel"><h2>Собранный текст</h2><p class="small">Если ссылок нет, вернитесь на основной сайт и заполните поля «Ссылка» в разделе «Мероприятия» или «Результаты и ссылки».</p><textarea id="out" readonly></textarea><div class="actions"><button class="btn light" onclick="build()">Обновить список</button><button class="btn light" onclick="copyForCodex()">Скопировать</button></div></section>
+<section class="panel"><h2>Найденные ссылки</h2><div id="list"></div></section>
+</div>
+<script>
+const KEY='kemfest2026_state_v1';
+const TASKS=[
+[1,'Создание общего визуального стиля проекта','Дек 2025 — янв 2026','2026-01-31',0,1,500],
+[2,'Публикация стартовых пресс-релизов','Янв — фев 2026','2026-02-28',0,5,2000],
+[3,'Общеорганизационная подготовка проекта','Дек 2025 — июн 2026','2026-06-30',0,1,500],
+[4,'Сбор и систематизация исторической информации','Дек 2025 — фев 2026','2026-02-28',0,1,500],
+[5,'Серия мастер-классов по созданию костюмов','Фев — май 2026','2026-05-31',80,5,5000],
+[6,'Запись и монтаж цикла видеороликов','Мар — май 2026','2026-05-31',0,1,500],
+[7,'Подготовка Исторического фестиваля «КемьФест»','Фев — июн 2026','2026-06-06',0,5,2000],
+[8,'Проведение Исторического фестиваля «КемьФест»','Июн 2026','2026-06-07',400,6,5000],
+[9,'Размещение и распространение видеороликов','Апр — ноя 2026','2026-11-30',0,25,50000],
+[10,'Итоговое собрание команды проекта','Июн 2026','2026-06-15',0,1,500],
+[11,'Публикация итоговых пост-релизов','Июн 2026','2026-06-30',0,5,2000],
+[12,'Аналитическая и финансовая отчётность','Июн — ноя 2026','2026-11-30',0,1,500]
+].map(a=>({id:a[0],title:a[1],period:a[2],deadline:a[3],participants:a[4],publications:a[5],views:a[6]}));
+function load(){try{return JSON.parse(localStorage.getItem(KEY)||'{}')}catch(e){return {}}}
+function fd(s){return new Date(s+'T00:00:00').toLocaleDateString('ru-RU')}
+function statusName(v){return v==='completed'?'выполнено':v==='progressing'?'в работе':'не начато'}
+function esc(s){return String(s||'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]))}
+function build(){const state=load(),tasks=state.tasks||{},kpi=state.kpi||{},lines=[];let linkCount=0;const cards=[];lines.push('Проверь, пожалуйста, публичные просмотры и охваты по ссылкам проекта «КемьФест 2026».');lines.push('');lines.push('Общие фактические показатели, внесённые на сайт:');lines.push('Участники: '+(kpi.p||0)+' из 480');lines.push('Публикации: '+(kpi.pub||0)+' из 57');lines.push('Просмотры: '+new Intl.NumberFormat('ru-RU').format(kpi.views||0)+' из 69 000');if(kpi.comment)lines.push('Комментарий: '+kpi.comment);lines.push('');lines.push('Ссылки и материалы по мероприятиям:');TASKS.forEach(t=>{const s=tasks[t.id]||{},has=s.link||s.result||(s.files||[]).length;if(!has)return;if(s.link)linkCount++;lines.push('');lines.push(t.id+'. '+t.title);lines.push('Период: '+t.period+'. Срок: '+fd(t.deadline)+'. Статус: '+statusName(s.status)+'.');lines.push('План: участников '+t.participants+', публикаций '+t.publications+', просмотров '+new Intl.NumberFormat('ru-RU').format(t.views)+'.');if(s.link)lines.push('Ссылка для проверки: '+s.link);if(s.result)lines.push('Фактический результат: '+s.result);if(s.date)lines.push('Фактическая дата: '+fd(s.date));if((s.files||[]).length)lines.push('Отмеченные файлы: '+s.files.join(', '));cards.push('<div class="task"><b>'+t.id+'. '+esc(t.title)+'</b><div class="small">План просмотров: '+new Intl.NumberFormat('ru-RU').format(t.views)+' · статус: '+statusName(s.status)+'</div>'+(s.link?'<a href="'+esc(s.link)+'" target="_blank" rel="noopener">'+esc(s.link)+'</a>':'<span class="small">Ссылка не заполнена</span>')+'</div>')});if(!linkCount)lines.push('Ссылки пока не заполнены. Добавьте ссылки в основном сайте, затем вернитесь сюда.');document.getElementById('out').value=lines.join('\n');document.getElementById('list').innerHTML=cards.length?cards.join(''):'<div class="note">Ссылок пока нет. Заполните их в основном сайте, затем вернитесь на эту страницу.</div>'}
+function copyForCodex(){build();const text=document.getElementById('out').value;if(navigator.clipboard){navigator.clipboard.writeText(text).then(()=>alert('Текст скопирован. Вставьте его в чат Codex для проверки просмотров.')).catch(downloadTxt)}else downloadTxt()}
+function downloadTxt(){build();const blob=new Blob([document.getElementById('out').value],{type:'text/plain;charset=utf-8'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='kemfest-links-for-views-check.txt';a.click();URL.revokeObjectURL(a.href)}
+build();
+</script>
+</body>
+</html>
