@@ -148,7 +148,9 @@
       if(typeof original!=='function'||original.__guarded)return;
       const wrapped=function(){
         if(!requireAdmin())return;
-        return original.apply(this,arguments);
+        const result=original.apply(this,arguments);
+        setTimeout(()=>{guardGlobals();applyAdminUi();},0);
+        return result;
       };
       wrapped.__guarded=true;
       window[name]=wrapped;
@@ -233,7 +235,6 @@
     document.addEventListener('input',blockPublicEdit,true);
     document.addEventListener('change',blockPublicEdit,true);
     document.addEventListener('click',blockPublicEdit,true);
-    new MutationObserver(()=>{guardGlobals();applyAdminUi();}).observe(document.body,{childList:true,subtree:true});
     loadPublicCloud();
   }
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',bind);
