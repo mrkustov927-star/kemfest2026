@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Проверка охватов и просмотров - КемьФест 2026</title>
+<style>
+body{margin:0;background:#f5f7f2;color:#20241f;font-family:Inter,Segoe UI,Arial,sans-serif}.shell{max-width:980px;margin:auto;padding:22px}.hero{background:#244c3a;color:#fff;border-radius:10px;padding:24px}.hero h1{margin:0 0 8px;font-family:Georgia,serif}.card{background:#fff;border:1px solid #dde5dc;border-radius:8px;padding:18px;margin-top:14px}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.kpi b{font-size:28px}.bar{height:10px;background:#e8eee7;border-radius:99px;overflow:hidden;margin-top:10px}.bar i{display:block;height:100%;background:linear-gradient(90deg,#244c3a,#2f6f82)}.ok{border-left:5px solid #2e7d53}.warn{border-left:5px solid #a96d12}.bad{border-left:5px solid #aa3e34}.btn{border:0;border-radius:8px;padding:12px 14px;font-weight:800;background:#e8c777;color:#1f372b;cursor:pointer;margin:12px 8px 0 0}.secondary{background:#fff;border:1px solid #dde5dc;color:#244c3a}pre{white-space:pre-wrap;background:#fff;border:1px solid #dde5dc;border-radius:8px;padding:14px;line-height:1.45}.small{color:#667168;font-size:13px}@media(max-width:720px){.grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="shell">
+  <div class="hero">
+    <h1>Проверка охватов и просмотров</h1>
+    <div>Сверка публикаций, просмотров, ссылок и скриншотов статистики для отчёта Росмолодёжь.Гранты.</div>
+    <button class="btn" onclick="copyReview()">Скопировать проверку</button>
+    <a class="btn secondary" href="./">Вернуться на сайт</a>
+  </div>
+  <div class="grid" id="kpis"></div>
+  <div id="checks"></div>
+  <h2>Текст для проверки</h2>
+  <pre id="report"></pre>
+</div>
+<script>
+const TASKS=[
+[1,'Создание общего визуального стиля проекта',1,500],[2,'Публикация стартовых пресс-релизов',5,2000],[3,'Общеорганизационная подготовка проекта',1,500],[4,'Сбор и систематизация исторической информации',1,500],[5,'Серия мастер-классов по созданию костюмов',5,5000],[6,'Запись и монтаж цикла видеороликов',1,500],[7,'Подготовка Исторического фестиваля «КемьФест»',5,2000],[8,'Проведение Исторического фестиваля «КемьФест»',6,5000],[9,'Размещение и распространение видеороликов',25,50000],[10,'Итоговое собрание команды проекта',1,500],[11,'Публикация итоговых пост-релизов',5,2000],[12,'Аналитическая и финансовая отчётность',1,500]
+].map(x=>({id:x[0],title:x[1],publications:x[2],views:x[3]}));
+const PLAN_PUB=57,PLAN_VIEWS=69000,KEY='kemfest2026_state_v1';
+function load(){try{return JSON.parse(localStorage.getItem(KEY)||'{}')}catch(e){return{}}}
+function fmt(n){return new Intl.NumberFormat('ru-RU').format(Number(n)||0)}
+function pct(a,b){return Math.min(100,Math.round((Number(a)||0)/b*100))}
+const state=load(),kpi=state.kpi||{},tasks=state.tasks||{};
+function hasStatsFile(t){const files=(tasks[t.id]&&tasks[t.id].files)||[];return files.some(f=>/стат|охват|просмотр|скрин|screenshot|stat/i.test(f))}
+function reviewText(){const missingLinks=TASKS.filter(t=>!(tasks[t.id]&&tasks[t.id].link));const missingStats=TASKS.filter(t=>!hasStatsFile(t));let lines=[];lines.push('ПРОВЕРКА ОХВАТОВ И ПРОСМОТРОВ ПРОЕКТА «КЕМЬФЕСТ 2026»');lines.push('Публикации: факт '+(kpi.pub||0)+' из '+PLAN_PUB+', выполнение '+pct(kpi.pub,PLAN_PUB)+'%.');lines.push('Просмотры: факт '+fmt(kpi.views)+' из '+fmt(PLAN_VIEWS)+', выполнение '+pct(kpi.views,PLAN_VIEWS)+'%.');lines.push('');lines.push((kpi.pub||0)>=PLAN_PUB?'[x] Публикаций достаточно.':'[ ] Не хватает публикаций: '+Math.max(0,PLAN_PUB-(kpi.pub||0))+'.');lines.push((kpi.views||0)>=PLAN_VIEWS?'[x] Просмотров достаточно.':'[ ] Не хватает просмотров: '+fmt(Math.max(0,PLAN_VIEWS-(kpi.views||0)))+'.');lines.push(missingLinks.length?'[ ] Нет ссылок: '+missingLinks.map(t=>t.id+'. '+t.title).join('; ')+'.':'[x] Ссылки заполнены.');lines.push(missingStats.length?'[ ] Проверьте скриншоты статистики: '+missingStats.map(t=>t.id+'. '+t.title).join('; ')+'.':'[x] Скриншоты статистики отмечены.');lines.push('');lines.push('План по мероприятиям:');TASKS.forEach(t=>{const s=tasks[t.id]||{};lines.push(t.id+'. '+t.title+': публикации '+t.publications+', просмотры '+fmt(t.views)+', ссылка '+(s.link||'не заполнена')+', файлы '+((s.files||[]).length?s.files.join(', '):'не отмечены')+'.')});return lines.join('\n')}
+function render(){kpis.innerHTML=[['Публикации',kpi.pub||0,PLAN_PUB],['Просмотры',fmt(kpi.views),fmt(PLAN_VIEWS),pct(kpi.views,PLAN_VIEWS)],['Готовность',pct(kpi.pub,PLAN_PUB)+'%', 'по публикациям']].map((x,i)=>`<div class="card kpi"><div class="small">${x[0]}</div><b>${x[1]}</b><div class="small">из ${x[2]}</div><div class="bar"><i style="width:${i===1?x[3]:pct(x[1],x[2])}%"></i></div></div>`).join('');const text=reviewText();report.textContent=text;checks.innerHTML=text.split('\n').filter(x=>x.startsWith('[')).map(x=>`<div class="card ${x.startsWith('[x]')?'ok':'bad'}">${x}</div>`).join('')||'<div class="card warn">Сначала внесите данные на основной странице сайта.</div>'}
+function copyReview(){navigator.clipboard&&navigator.clipboard.writeText(report.textContent).then(()=>alert('Проверка скопирована. Вставьте её в чат для анализа.'))}
+render();
+</script>
+</body>
+</html>
