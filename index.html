@@ -3,171 +3,79 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>КемьФест 2026 - помощник реализации</title>
+  <title>КемьФест 2026 - командный план</title>
   <link rel="stylesheet" href="./styles.css">
 </head>
-<body>
+<body class="teamPage">
   <div class="shell">
-    <header class="hero">
+    <header class="hero teamHero">
       <div class="heroGrid">
         <div>
-          <div class="eyebrow">Росмолодежь.Гранты · соглашение № 091-11-2025-2542</div>
-          <h1>КемьФест 2026</h1>
-          <p class="subtitle">Единая система реализации проекта: план, доказательства, участники, бюджет, облачные папки, журнал изменений и печатный отчет собираются из одного набора данных.</p>
+          <div class="eyebrow">КемьФест 2026 · рабочая страница команды</div>
+          <h1>Что нужно успеть</h1>
+          <p class="subtitle">Календарь, ближайшие сроки и подсказки по реализации проекта без служебных форм и финансовых данных.</p>
           <div class="stats">
-            <div><b>12</b><span>мероприятий</span></div>
-            <div><b>480</b><span>участников</span></div>
-            <div><b>57</b><span>публикаций</span></div>
-            <div><b>69 000</b><span>просмотров</span></div>
+            <div><b>12</b><span>контрольных точек</span></div>
+            <div><b>10+</b><span>мастер-классов</span></div>
+            <div><b>480</b><span>участников по плану</span></div>
+            <div><b>30.11</b><span>финальный срок</span></div>
           </div>
           <div class="actions">
-            <a class="btn primary" href="https://github.com/mrkustov927-star/kemfest2026/raw/main/project-kemfest-2026.docx" download>Скачать файл проекта</a>
-            <button class="btn secondary admin-only" data-tab-go="proofs">Внести доказательство</button>
-            <button class="btn secondary" data-tab-go="check">Проверить готовность</button>
-            <button class="btn secondary admin-only" id="copyFull">Скопировать на проверку</button>
-            <button class="btn secondary admin-only" id="printReport">Печать отчета</button>
-            <button class="btn secondary admin-only" id="exportData">Сохранить копию</button>
-            <button class="btn secondary admin-only" id="importBtn">Импорт</button>
-            <button class="btn secondary" id="adminToggle" type="button">Администратор</button>
-            <input id="importFile" type="file" accept=".json" hidden>
+            <a class="btn primary" href="#calendar">Открыть календарь</a>
+            <a class="btn secondary" href="#plan">План реализации</a>
+            <a class="btn secondary" href="https://github.com/mrkustov927-star/kemfest2026/raw/main/project-kemfest-2026.docx" download>Скачать проект</a>
+            <a class="btn secondary" href="./admin.html">Администратор</a>
           </div>
         </div>
-        <div class="ring" id="ring"><div><b id="overallPct">0%</b><span>готовность</span></div></div>
+        <div class="teamClock">
+          <b id="teamDeadline">...</b>
+          <span>до контрольной даты 30.11.2026</span>
+        </div>
       </div>
     </header>
 
-    <nav class="nav" id="nav">
-      <button class="active" data-tab="dashboard">Дашборд</button>
-      <button data-tab="plan">План реализации</button>
-      <button data-tab="proofs">Доказательства</button>
-      <button class="admin-only" data-tab="people">Участники</button>
-      <button class="admin-only" data-tab="budget">Бюджет</button>
-      <button data-tab="docs">Документы</button>
-      <button class="admin-only" data-tab="cloud">Облако</button>
-      <button class="admin-only" data-tab="history">История</button>
-      <button data-tab="check">Автопроверка</button>
-      <button class="admin-only" data-tab="report">Отчет</button>
-    </nav>
-
-    <div class="adminPanel no-print" id="adminPanel" hidden>
-      <div class="card adminBox">
-        <div>
-          <div class="label">Доступ</div>
-          <h3 id="adminTitle">Публичный режим</h3>
-          <div class="small" id="adminHint">Служебные разделы и редактирование закрыты. При первом входе задайте PIN для этого браузера.</div>
-        </div>
-        <div class="adminControls">
-          <input id="adminPin" type="password" inputmode="numeric" autocomplete="current-password" placeholder="PIN администратора">
-          <button class="btn light" id="adminLogin" type="button">Войти</button>
-          <button class="btn light" id="adminLogout" type="button">Выйти</button>
-          <button class="btn light" id="adminChangePin" type="button">Сменить PIN</button>
-        </div>
-        <div class="note" id="adminStatus">Это локальная защита для GitHub Pages: она скрывает служебные настройки от обычных посетителей, но не заменяет серверную авторизацию.</div>
-      </div>
-    </div>
-
     <main>
-      <section id="dashboard" class="tab active">
-        <div class="section"><div><h2>Дашборд проекта</h2><p>Показатели, сроки и главные пробелы перед отчетностью.</p></div></div>
-        <div class="grid kpis" id="kpis"></div>
-        <div class="grid dash">
-          <div class="card">
-            <div class="label">Срок проекта</div>
-            <div class="value" id="daysLeft"></div>
-            <div class="small">дней до 30.11.2026</div>
-            <div class="bar"><i id="timeBar"></i></div>
-            <div class="note" id="nearest"></div>
+      <section class="teamBand" id="calendar">
+        <div class="section">
+          <div>
+            <h2>Ближайшие действия</h2>
+            <p>Командная подсказка показывает, на что обратить внимание в первую очередь.</p>
           </div>
-          <div class="card"><h3>План / факт</h3><div id="chart"></div></div>
         </div>
+        <div class="teamUrgent" id="urgentList"></div>
       </section>
 
-      <section id="plan" class="tab">
+      <section class="teamBand">
         <div class="section">
-          <div><h2>План реализации</h2><p>По каждому мероприятию фиксируются статус, дата, результат и обязательные подтверждения.</p></div>
-          <div class="controls"><input id="taskSearch" placeholder="Поиск"><select id="taskFilter"><option value="all">Все</option><option value="open">Незавершенные</option><option value="risk">С риском срока</option></select></div>
+          <div>
+            <h2>Как работать команде</h2>
+            <p>Участник команды не заполняет отчётные формы на главной странице, а видит только понятные задачи.</p>
+          </div>
         </div>
         <div class="grid cards3">
-          <div class="card"><div class="label">Мастер-классы</div><div class="value">10+</div><div class="small">февраль - май 2026</div></div>
-          <div class="card"><div class="label">Участники мастер-классов</div><div class="value">80</div><div class="small">14-25 лет, нужны списки и фото/видео</div></div>
-          <div class="card"><div class="label">Итоговая дата</div><div class="value">30.11</div><div class="small">все результаты, ссылки, статистика и финдокументы</div></div>
-        </div>
-        <div id="taskList" class="grid"></div>
-      </section>
-
-      <section id="proofs" class="tab">
-        <div class="section">
-          <div><h2>Единый реестр доказательств</h2><p>Публикации, ссылки, скриншоты статистики, фото, видео, списки, акты и папки документов.</p></div>
-          <div class="controls">
-            <button class="btn light" data-add-proof="publication">Добавить публикацию</button>
-            <button class="btn light" data-add-proof="stats">Добавить скрин</button>
-            <button class="btn light" data-add-proof="folder">Добавить папку</button>
-            <button class="btn light" id="toggleImportLinks">Импортировать ссылки</button>
-          </div>
-        </div>
-        <div id="linkImport" class="card importbox no-print">
-          <div class="field"><label>Список ссылок</label><textarea id="bulkLinks" placeholder="Каждая ссылка с новой строки. Можно вместе с названием."></textarea></div>
-          <div class="actions"><button class="btn light" id="importLinks">Добавить ссылки</button><button class="btn light" id="starterLinks">Загрузить примерные ссылки проекта</button></div>
-        </div>
-        <div class="grid kpis" id="proofKpis"></div>
-        <div class="card tablewrap"><table class="table"><thead><tr><th>Тип</th><th>Мероприятие</th><th>Дата</th><th>Источник</th><th>Название</th><th>Ссылка</th><th>Просмотры</th><th>Охват</th><th>Подтв.</th><th></th></tr></thead><tbody id="proofRows"></tbody></table></div>
-      </section>
-
-      <section id="people" class="tab admin-only">
-        <div class="section"><div><h2>Участники</h2><p>Реестр уникальных участников, повторных посещений, возраста и ссылок на списки.</p></div><button class="btn light" id="addPerson">Добавить строку</button></div>
-        <div class="grid kpis" id="peopleKpis"></div>
-        <div class="card tablewrap"><table class="table"><thead><tr><th>Дата</th><th>Мероприятие</th><th>Уникальные</th><th>Повторные</th><th>14-25</th><th>Список</th><th></th></tr></thead><tbody id="peopleRows"></tbody></table></div>
-      </section>
-
-      <section id="budget" class="tab admin-only">
-        <div class="section"><div><h2>Бюджет и финансовые документы</h2><p>План гранта - 891 000 руб. Проверяются факт, документы, суммы и связь с мероприятиями.</p></div><button class="btn light" id="copyFinance">Скопировать финансовую проверку</button></div>
-        <div class="grid kpis" id="budgetKpis"></div>
-        <div class="card tablewrap"><table class="table"><thead><tr><th>Статья</th><th>План</th><th>Факт</th><th>Документ</th><th>Ссылка / папка</th><th>Сумма</th><th>Мероприятие</th><th>Статус</th></tr></thead><tbody id="budgetRows"></tbody></table></div>
-      </section>
-
-      <section id="docs" class="tab">
-        <div class="section"><div><h2>Документы</h2><p>Комплектность материалов перед отчетностью.</p></div></div>
-        <div class="grid cards2">
-          <div class="card"><div class="grid" id="docList"></div></div>
-          <div class="card"><h3>Файл проекта</h3><a class="btn light" href="https://github.com/mrkustov927-star/kemfest2026/raw/main/project-kemfest-2026.docx" download>Скачать проект DOCX</a><div class="note">Перед сдачей сверить номер соглашения, сроки, суммы, назначение расходов, акты, ссылки, статистику и финансовые документы.</div><button class="btn danger" id="resetAll">Сбросить локальные данные</button></div>
+          <div class="card"><div class="label">1. Сделать</div><div class="value">задачу</div><div class="small">Провести мероприятие, подготовить публикацию, собрать фото, видео или документы.</div></div>
+          <div class="card"><div class="label">2. Передать</div><div class="value">ссылки</div><div class="small">Отправить администратору ссылки, списки, скриншоты статистики и краткий результат.</div></div>
+          <div class="card"><div class="label">3. Проверить</div><div class="value">срок</div><div class="small">Свериться с календарём и подсказками, чтобы не пропустить контрольные точки.</div></div>
         </div>
       </section>
 
-      <section id="cloud" class="tab admin-only">
-        <div class="section"><div><h2>Облако и синхронизация</h2><p>Для 10/10 сайт должен быть связан с общей папкой и таблицей. Здесь фиксируются ссылки и при желании подключается Google Apps Script.</p></div></div>
-        <div class="grid cards2">
-          <div class="card"><div class="form" id="cloudForm"></div></div>
-          <div class="card"><h3>Обмен данными</h3><div class="actions"><button class="btn light" id="copyJson">Скопировать JSON</button><button class="btn light" id="sendCloud">Сохранить в облако</button><button class="btn light" id="loadCloud">Загрузить из облака</button><button class="btn light" id="openDrive">Открыть папку Drive</button></div><div class="note" id="cloudStatus">Если Apps Script не подключен, используйте экспорт JSON и ссылки на Google Drive/таблицу.</div></div>
-        </div>
+      <section class="teamBand" id="plan">
+        <div class="section"><div><h2>План реализации</h2><p>Все контрольные точки проекта с подсказками, что должно быть готово к сроку.</p></div></div>
+        <div class="teamPlan" id="teamPlan"></div>
       </section>
 
-      <section id="history" class="tab admin-only">
-        <div class="section"><div><h2>История изменений</h2><p>Журнал показывает, когда менялись ключевые данные. Это помогает восстановить ход реализации.</p></div><button class="btn light" id="clearHistory">Очистить историю</button></div>
-        <div class="card tablewrap"><table class="table"><thead><tr><th>Дата</th><th>Действие</th><th>Детали</th></tr></thead><tbody id="historyRows"></tbody></table></div>
-      </section>
-
-      <section id="check" class="tab">
-        <div class="section"><div><h2>Автопроверка</h2><p>Проверка показателей, обязательных доказательств, сроков, участников, бюджета, документов и облачной готовности.</p></div><div class="controls"><button class="btn light" id="copyReach">Проверка просмотров</button><button class="btn light" id="copyCheck">Полная проверка</button></div></div>
-        <div class="grid cards3" id="checkCards"></div>
-        <div class="section"><div><h2>Что исправить</h2><p>Конкретные действия до состояния 10/10.</p></div></div>
-        <div class="grid cards2" id="fixList"></div>
-      </section>
-
-      <section id="report" class="tab admin-only">
-        <div class="section"><div><h2>Отчет</h2><p>Печатная форма и текст для проверки собираются из всех разделов сайта.</p></div><div class="controls"><button class="btn light" id="printReport2">Печать отчета</button><button class="btn light" id="copyFull2">Скопировать на проверку</button></div></div>
-        <div class="grid cards2">
-          <div class="card"><div class="field"><label>Ключевые результаты проекта</label><textarea id="reportResults"></textarea></div></div>
-          <div class="card"><div class="field"><label>Отклонения, риски и объяснения</label><textarea id="reportRisks"></textarea></div></div>
-          <div class="card"><h3>Итоговая сводка</h3><div class="note" id="summary"></div></div>
-          <div class="card"><h3>Готовый текст</h3><textarea id="reportText" readonly></textarea></div>
+      <section class="teamBand">
+        <div class="section"><div><h2>Материалы</h2><p>Быстрые переходы для команды и администратора проекта.</p></div></div>
+        <div class="grid cards3">
+          <a class="card teamLink" href="https://github.com/mrkustov927-star/kemfest2026/raw/main/project-kemfest-2026.docx" download><span class="label">Файл проекта</span><b>Скачать DOCX</b><small>Исходный проект для сверки сроков и показателей.</small></a>
+          <a class="card teamLink" href="./admin.html"><span class="label">Администратор</span><b>Ввод и анализ</b><small>Доказательства, участники, бюджет, облако, отчёт и проверка.</small></a>
+          <a class="card teamLink" href="#calendar"><span class="label">Календарь</span><b>Вернуться к срокам</b><small>Ближайшие действия и просроченные контрольные точки.</small></a>
         </div>
       </section>
     </main>
 
-    <div class="footer">Исторический фестиваль «КемьФест» · единый сайт-помощник реализации и отчетности</div>
+    <div class="footer">Исторический фестиваль «КемьФест» · командная страница реализации проекта</div>
   </div>
-  <script src="./config.js"></script>
-  <script src="./app.js"></script>
-  <script src="./security-sync.js"></script>
+  <script src="./team.js"></script>
 </body>
 </html>
